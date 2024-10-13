@@ -1,9 +1,95 @@
+'use client'
+
+import { useState } from "react";
 import Image from "next/image";
 import Link from 'next/link';
 
 export default function Home() {
+
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+
   return (
     <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
+
+      <header className="w-full flex justify-between items-center">
+        <Link href="/" passHref>
+          <Image
+            className="dark:invert"
+            src="/images/icon_black.png"
+            alt="Logo"
+            width={50}
+            height={50}
+            priority
+            // Use Tailwind breakpoints to increase size for larger screens
+            sizes="(max-width: 640px) 50px, 80px"
+          />
+        </Link>
+        {/* Hamburger Button for Mobile */}
+        <button
+          className="sm:hidden p-2 focus:outline-none"
+          onClick={toggleMenu}
+        >
+          {/* Inline SVG for hamburger icon */}
+          <svg
+            className="w-6 h-6 text-black dark:text-white"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M4 6h16M4 12h16M4 18h16"
+            ></path>
+          </svg>
+        </button>
+        {/* Desktop Menu */}
+        <nav className="hidden sm:flex gap-6">
+          <Link href="/strategy" passHref>
+            <div className="flex items-center gap-2 hover:underline hover:underline-offset-4">
+              Mission
+            </div>
+          </Link>
+          <Link href="/whitepaper" passHref>
+            <div className="flex items-center gap-2 hover:underline hover:underline-offset-4">
+              Whitepaper
+            </div>
+          </Link>
+          <Link href="/research" passHref>
+            <div className="flex items-center gap-2 hover:underline hover:underline-offset-4">
+              Research
+            </div>
+          </Link>
+        </nav>
+      </header>
+
+      {/* Mobile Menu */}
+      {isMenuOpen && (
+        <nav className="flex flex-col items-center sm:hidden">
+          <Link href="/strategy" passHref legacyBehavior>
+            <div className="my-2 text-lg hover:underline">
+              Mission
+            </div>
+          </Link>
+          <Link href="/whitepaper" passHref>
+            <div className="my-2 text-lg hover:underline">
+              Whitepaper
+            </div>
+          </Link>
+          <Link href="/research" passHref>
+            <div className="my-2 text-lg hover:underline">
+              Research
+            </div>
+          </Link>
+        </nav>
+      )}
+
       <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
         <Image
           className="dark:invert"
